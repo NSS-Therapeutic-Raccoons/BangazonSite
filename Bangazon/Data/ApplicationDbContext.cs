@@ -77,13 +77,40 @@ namespace Bangazon.Data {
             );
 
             modelBuilder.Entity<ProductType> ().HasData (
-                new ProductType () {
+                new ProductType () 
+                {
                     ProductTypeId = 1,
                         Label = "Sporting Goods"
                 },
-                new ProductType () {
+                new ProductType () 
+                {
                     ProductTypeId = 2,
                         Label = "Appliances"
+                },
+                new ProductType()
+                {
+                    ProductTypeId = 3,
+                    Label = "Tools"
+                },
+                new ProductType()
+                {
+                    ProductTypeId = 4,
+                    Label = "Books"
+                },
+                new ProductType()
+                {
+                    ProductTypeId = 5,
+                    Label = "Movies and TV"
+                },
+                new ProductType()
+                {
+                    ProductTypeId = 6,
+                    Label = "Video Games"
+                },
+                new ProductType()
+                {
+                    ProductTypeId = 7,
+                    Label = "Clothing"
                 }
             );
 
@@ -95,16 +122,126 @@ namespace Bangazon.Data {
                         Description = "It flies high",
                         Title = "Kite",
                         Quantity = 100,
-                        Price = 2.99
+                        Price = 7.99
                 },
                 new Product () {
                     ProductId = 2,
                         ProductTypeId = 2,
                         UserId = user.Id,
-                        Description = "It rolls fast",
-                        Title = "Wheelbarrow",
+                        Description = "We need it, NSS needs it. Get it!",
+                        Title = "Microwave 4",
                         Quantity = 5,
-                        Price = 29.99
+                        Price = 189.99
+                },
+                new Product()
+                {
+                    ProductId = 3,
+                    ProductTypeId = 3,
+                    UserId = user.Id,
+                    Description = "When you only have a hammer, everything starts to look like a nail..",
+                    Title = "Hammer",
+                    Quantity = 5,
+                    Price = 29.99
+                },
+                new Product()
+                {
+                    ProductId = 4,
+                    ProductTypeId = 4,
+                    UserId = user.Id,
+                    Description = "You know there's a lot more magic going on at that school...",
+                    Title = "50 Shades of Potter Hardcover",
+                    Quantity = 5,
+                    Price = 24.99
+                },
+                new Product()
+                {
+                    ProductId = 5,
+                    ProductTypeId = 4,
+                    UserId = user.Id,
+                    Description = "In a hole in the ground there lived a Hobbit...",
+                    Title = "The Hobbit",
+                    Quantity = 9,
+                    Price = 19.99
+                },
+                new Product()
+                {
+                    ProductId = 6,
+                    ProductTypeId = 5,
+                    UserId = user.Id,
+                    Description = "Join the Parr family on their continuing adventure!",
+                    Title = "The Incredibles 2",
+                    Quantity = 15,
+                    Price = 29.99
+                },
+                new Product()
+                {
+                    ProductId = 7,
+                    ProductTypeId = 5,
+                    UserId = user.Id,
+                    Description = "Like a turd, rolling in the wind...",
+                    Title = "Venom 4k Blu-ray Combo",
+                    Quantity = 35,
+                    Price = 29.99
+                },
+                new Product()
+                {
+                    ProductId = 8,
+                    ProductTypeId = 5,
+                    UserId = user.Id,
+                    Description = "Find out what happned to Ant-Man during the events of Infinity War",
+                    Title = "Ant-Man 2 4k Blu-ray Combo",
+                    Quantity = 22,
+                    Price = 34.99
+                },
+                new Product()
+                {
+                    ProductId = 9,
+                    ProductTypeId = 6,
+                    UserId = user.Id,
+                    Description = "The wait is over! Check out this chilling peek of the future!",
+                    Title = "Red Dead Redemption 2",
+                    Quantity = 45,
+                    Price = 59.99
+                },
+                new Product()
+                {
+                    ProductId = 10,
+                    ProductTypeId = 6,
+                    UserId = user.Id,
+                    Description = "Insomniac saves the superhero genre with this stellar entry!",
+                    Title = "Spider-Man",
+                    Quantity = 65,
+                    Price = 59.99
+                },
+                new Product()
+                {
+                    ProductId = 11,
+                    ProductTypeId = 6,
+                    UserId = user.Id,
+                    Description = "Yes, another one. Pick a war, any war!",
+                    Title = "Battlefield 5",
+                    Quantity = 125,
+                    Price = 49.99
+                },
+                new Product()
+                {
+                    ProductId = 12,
+                    ProductTypeId = 7,
+                    UserId = user.Id,
+                    Description = "Everyone loves a gender neutral sweater!",
+                    Title = "Hoodie",
+                    Quantity = 74,
+                    Price = 69.99
+                },
+                new Product()
+                {
+                    ProductId = 13,
+                    ProductTypeId = 7,
+                    UserId = user.Id,
+                    Description = "Like a regular hat, but seen on hobos and hipsters alike!",
+                    Title = "Hipster Hat",
+                    Quantity = 128,
+                    Price = 19.99
                 }
             );
 
