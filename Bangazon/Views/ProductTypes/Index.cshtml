@@ -14,15 +14,16 @@
     <ul class="col-md-6">
         @foreach (GroupedProducts gp in Model.GroupedProducts) 
         {
-            <li class="list-group-item category-list-item">
-                <span class="category-title">@gp.TypeName (@gp.ProductCount)</span>
-                <div class="d-flex category-top-products">
-                    @foreach (Product product in gp.Products) 
-                    { 
-                        <a asp-action="Details" asp-controller="Products" asp-route-id="@product.ProductId" class="col-md-12 top-product-link">@product.Title</a><br />
-                    }
-                </div>
-            </li>
+        <li class="list-group-item category-list-item">
+            <a asp-action="Details" asp-route-id="@gp.TypeId" class="category-title">@gp.TypeName (@gp.ProductCount)</a>
+            @*<span class="category-title">@gp.TypeName (@gp.ProductCount)</span>*@
+            <div class="d-flex category-top-products">
+                @foreach (Product product in gp.Products)
+                {
+                    <a asp-action="Details" asp-controller="Products" asp-route-id="@product.ProductId" class="col-md-12 top-product-link">@product.Title</a><br />
+                }
+            </div>
+        </li>
         }
     </ul>
 </div>

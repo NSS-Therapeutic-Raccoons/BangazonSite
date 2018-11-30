@@ -4,33 +4,23 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Label)</h2>
 
 <div>
-    <h4>@Html.DisplayFor(model => model.Label)</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Label)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Label)
-        </dd>
+    <div class="row">
         @foreach (Product p in Model.Products)
         {
-            <dt>
+            <div class="col-md-3">
                 @p.Title
-            </dt>
-            <dd>
+            </div>
+            <div class="col-md-7">
                 @p.Quantity
-            </dd>
-            <dd>
+            </div>
+            <div class="col-md-2">
                 $@p.Price
-            </dd>
+            </div>
         }
-    </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ProductTypeId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
