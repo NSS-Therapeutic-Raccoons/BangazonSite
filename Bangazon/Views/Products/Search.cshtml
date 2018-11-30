@@ -1,0 +1,32 @@
+﻿@model Bangazon.Models.ProductViewModels.ProductSearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Search Results</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Products) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
