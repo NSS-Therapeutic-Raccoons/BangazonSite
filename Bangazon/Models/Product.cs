@@ -41,6 +41,7 @@ namespace Bangazon.Models
     [StringLength(55, ErrorMessage="Please link an image")]
     public string ImagePath {get; set;}
 
+
     [Required]
     public ApplicationUser User { get; set; }
 
