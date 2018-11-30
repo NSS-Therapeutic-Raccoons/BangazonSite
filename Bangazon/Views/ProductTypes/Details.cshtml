@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>ProductType</h4>
+    <h4>@Html.DisplayFor(model => model.Label)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,6 +16,18 @@
         <dd>
             @Html.DisplayFor(model => model.Label)
         </dd>
+        @foreach (Product p in Model.Products)
+        {
+            <dt>
+                @p.Title
+            </dt>
+            <dd>
+                @p.Quantity
+            </dd>
+            <dd>
+                $@p.Price
+            </dd>
+        }
     </dl>
 </div>
 <div>
