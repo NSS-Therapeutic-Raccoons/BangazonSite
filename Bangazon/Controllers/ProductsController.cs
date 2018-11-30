@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
 using Bangazon.Models.ProductViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -28,12 +29,15 @@ namespace Bangazon.Controllers
         }
 
         // GET: Search Products
+        [Authorize]
         public async Task<IActionResult> Search(string search)
         {
             ProductSearchViewModel viewmodel = new ProductSearchViewModel();
 
+            viewmodel.Search = search;
+
             viewmodel.Products = await _context.Product
-                                    .Where(p => p.Title.StartsWith(search))
+                                    .Where(p => p.Title.Contains(search))
                                     .ToListAsync();
 
             return View(viewmodel);
