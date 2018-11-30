@@ -7,9 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.ProductTypeViewModels;
 
 namespace Bangazon.Controllers
 {
+    
+    /*
+        Author: Theraputic Donkeys
+        Purpose: Controller for ProductTypes that houses the Index, Details, Create, Edit, and Delete actions for the Views related to the ProductTypes
+    */
     public class ProductTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,10 +25,32 @@ namespace Bangazon.Controllers
             _context = context;
         }
 
+
+        /*
+            Author: Ricky Bruner
+            Purpose: Construct a viewmodel to house the necessary data needed to display the appropriate data for the ProductType Index View.
+        */
         // GET: ProductTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductType.ToListAsync());
+            var model = new ProductTypeListViewModel();
+
+            // Build list of Product instances for display in view
+            // LINQ is awesome
+            model.GroupedProducts = await (
+                from t in _context.ProductType
+                join p in _context.Product
+                on t.ProductTypeId equals p.ProductTypeId
+                group new { t, p } by new { t.ProductTypeId, t.Label } into grouped
+                select new GroupedProducts
+                {
+                    TypeId = grouped.Key.ProductTypeId,
+                    TypeName = grouped.Key.Label,
+                    ProductCount = grouped.Select(x => x.p.ProductId).Count(),
+                    Products = grouped.Select(x => x.p).Take(3)
+                }).ToListAsync();
+
+            return View(model);
         }
 
         // GET: ProductTypes/Details/5
