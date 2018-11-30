@@ -8,17 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Products
         public async Task<IActionResult> Index()
@@ -64,11 +69,13 @@ namespace Bangazon.Controllers
         [Authorize]
         public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,Title,Price,Quantity,UserId,City,ImagePath,ProductTypeId")] Product product)
         {
+            ModelState.Remove("User");
             if (ModelState.IsValid)
             {
+                product.User = await GetCurrentUserAsync();
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = product.ProductId.ToString() });
             }
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
