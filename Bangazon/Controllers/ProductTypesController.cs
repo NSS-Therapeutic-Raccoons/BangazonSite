@@ -11,6 +11,11 @@ using Bangazon.Models.ProductTypeViewModels;
 
 namespace Bangazon.Controllers
 {
+    
+    /*
+        Author: Theraputic Donkeys
+        Purpose: Controller for ProductTypes that houses the Index, Details, Create, Edit, and Delete actions for the Views related to the ProductTypes
+    */
     public class ProductTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,6 +25,11 @@ namespace Bangazon.Controllers
             _context = context;
         }
 
+
+        /*
+            Author: Ricky Bruner
+            Purpose: Construct a viewmodel to house the necessary data needed to display the appropriate data for the ProductType Index View.
+        */
         // GET: ProductTypes
         public async Task<IActionResult> Index()
         {
