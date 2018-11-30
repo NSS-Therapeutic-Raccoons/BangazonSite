@@ -15,7 +15,7 @@
         @foreach (GroupedProducts gp in Model.GroupedProducts) 
         {
             <li class="list-group-item category-list-item">
-                <a asp-action="Details" asp-route-id="@gp.TypeId" class="category-title">@gp.TypeName (@gp.ProductCount)</a>
+                <span class="category-title">@gp.TypeName (@gp.ProductCount)</span>
                 <div class="d-flex category-top-products">
                     @foreach (Product product in gp.Products) 
                     { 

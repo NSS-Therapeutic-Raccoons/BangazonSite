@@ -12,10 +12,6 @@ body {
     padding-right: 15px;
 }
 
-.category-top-products a {
-    text-decoration: none;
-    color: black !important;
-}
 
 /* Carousel */
 .carousel-caption p {

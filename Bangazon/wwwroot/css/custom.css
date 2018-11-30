@@ -21,11 +21,11 @@
 
 .top-product-link {
     text-decoration: none !important;
-    color: black !important;
+    color: #337ab7 !important;
     padding-left: 3em !important;
 }
 
-    .top-product-link:hover {
-        text-decoration: underline !important;
-        color: #337ab7 !important;
-    }
+.top-product-link:hover {
+    text-decoration: underline !important;
+    color: blue !important;
+}
