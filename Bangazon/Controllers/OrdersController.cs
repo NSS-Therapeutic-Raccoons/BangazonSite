@@ -37,11 +37,20 @@ namespace Bangazon.Controllers
             var order = await _context.Order
                 .Include(o => o.PaymentType)
                 .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+				.Include(o => o.OrderProducts)
+                .SingleOrDefaultAsync(o => o.OrderId == id);
+			var orderProduct = await _context.OrderProduct
+				
+				.Include(p=>p.Product)
+				.FirstOrDefaultAsync(m=>m.OrderId == order.OrderId);
             if (order == null)
             {
                 return NotFound();
             }
+			if (orderProduct == null)
+			{
+				return NotFound();
+			}
 
             return View(order);
         }

@@ -26,15 +26,25 @@
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Id)
+            @Html.DisplayFor(model => model.User.FirstName)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaymentType.AccountNumber)
-        </dd>
-    </dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.OrderProducts)
+            </dt>
+        @foreach (var item in Model.OrderProducts)
+        {
+            <dd>
+                    @Html.DisplayFor(modelItem => item.Product.Title)
+            </dd>
+        }
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PaymentType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentType.AccountNumber)
+            </dd>
+        </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a> |
