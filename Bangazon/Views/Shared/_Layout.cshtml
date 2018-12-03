@@ -4,6 +4,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +39,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="ProductTypes" asp-action="Index">Product Categories</a></li>
+                    @*
+                    Author:     Daniel Figueroa
+                    Purpose:    The if statement will only display the <li> when a user is logged in.
+                    *@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell Something</a></li>

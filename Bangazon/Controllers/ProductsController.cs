@@ -23,6 +23,10 @@ namespace Bangazon.Controllers
             _context = context;
         }
 
+        /*
+        Author:     Daniel Figueroa
+        Purpose:    GetCurrentUSerAsync. Method calls to get the user.
+        */
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Products
@@ -53,6 +57,10 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products/Create
+        /*
+        Author:     Daniel Figueroa
+        Purpose:    Route is Authorized so only a logged in user can view.
+        */
         [Authorize]
         public IActionResult Create()
         {
@@ -64,6 +72,11 @@ namespace Bangazon.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /*
+        Author:     Daniel Figueroa
+        Purpose:    Route is Authorized so only a logged in user can view. Creates a new product and asks Jeeves (calls the DB) to add the product to the table. The user instance is removed from the model, and after
+                    the ModelState is valid, it makes the GetCurrentUserAsync call to put the user back into the model.
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
