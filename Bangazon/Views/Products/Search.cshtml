@@ -17,22 +17,28 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>
+                <th class="col-md-2">
                     Title
                 </th>
-                <th>
+                <th class="col-md-4">
                     Description
+                </th>
+                <th class="col-md-2">
+                    Price
                 </th>
             </tr>
         </thead>
         <tbody>
     @foreach (var item in Model.Products) {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                <td class="col-md-2">
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">@item.Title</a>
                 </td>
-                <td>
+                <td class="col-md-4">
                     @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="col-md-2">
+                    @item.Price
                 </td>
             </tr>
     }

@@ -28,6 +28,11 @@ namespace Bangazon.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+
+        /*
+            Author: Ricky Bruner
+            Purpose: Method to accept the search input from the navbar, get products related to that query string, and return a view to the user based on that data.
+        */
         // GET: Search Products
         [Authorize]
         public async Task<IActionResult> Search(string search)
