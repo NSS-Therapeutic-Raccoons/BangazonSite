@@ -203,8 +203,8 @@ namespace Bangazon.Migrations
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    ImagePath = table.Column<string>(nullable: true),
+                    City = table.Column<string>(maxLength: 55, nullable: false),
+                    ImagePath = table.Column<string>(maxLength: 55, nullable: false),
                     ProductTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -281,7 +281,7 @@ namespace Bangazon.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "34570efb-179c-4518-a969-7562ee06dedd", 0, "8e0e5efc-8f2c-4109-8d11-4e24211f380b", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEP75mG3tgjh+TkUEOTCckLvNb/I+xUOGq1763pv3kOE477KAy0eJGMeEtO5r9SKIfQ==", null, false, "7aa37d15-2075-453c-9620-eccd5e70d23b", "123 Infinity Way", false, "admin@admin.com" });
+                values: new object[] { "269666fb-bee0-44a7-be70-2176a68c9919", 0, "70d04eca-d878-4648-8e83-8c19abc3ac33", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEM67QsfnPzgnuOBSOcg3ELbgmEapwQHo49KbJC/UnLesmTMoX4Z8sXswN/ah/Y9uXw==", null, false, "fd623e89-859b-4e8d-a02a-d8a28d90a871", "123 Infinity Way", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ProductType",
@@ -300,15 +300,15 @@ namespace Bangazon.Migrations
             migrationBuilder.InsertData(
                 table: "Order",
                 columns: new[] { "OrderId", "DateCompleted", "DateCreated", "PaymentTypeId", "UserId" },
-                values: new object[] { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "34570efb-179c-4518-a969-7562ee06dedd" });
+                values: new object[] { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "269666fb-bee0-44a7-be70-2176a68c9919" });
 
             migrationBuilder.InsertData(
                 table: "PaymentType",
                 columns: new[] { "PaymentTypeId", "AccountNumber", "DateCreated", "Description", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "86753095551212", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 2, "4102948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "34570efb-179c-4518-a969-7562ee06dedd" }
+                    { 1, "86753095551212", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 2, "4102948572991", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", "269666fb-bee0-44a7-be70-2176a68c9919" }
                 });
 
             migrationBuilder.InsertData(
@@ -316,19 +316,20 @@ namespace Bangazon.Migrations
                 columns: new[] { "ProductId", "City", "DateCreated", "Description", "ImagePath", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "It flies high", null, 7.99, 1, 100, "Kite", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "We need it, NSS needs it. Get it!", null, 189.99, 2, 5, "Microwave 4", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "When you only have a hammer, everything starts to look like a nail..", null, 29.99, 3, 5, "Hammer", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "You know there's a lot more magic going on at that school...", null, 24.99, 4, 5, "50 Shades of Potter Hardcover", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "In a hole in the ground there lived a Hobbit...", null, 19.99, 4, 9, "The Hobbit", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Join the Parr family on their continuing adventure!", null, 29.99, 5, 15, "The Incredibles 2", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 7, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Like a turd, rolling in the wind...", null, 29.99, 5, 35, "Venom 4k Blu-ray Combo", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 8, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Find out what happned to Ant-Man during the events of Infinity War", null, 34.99, 5, 22, "Ant-Man 2 4k Blu-ray Combo", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 9, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "The wait is over! Check out this chilling peek of the future!", null, 59.99, 6, 45, "Red Dead Redemption 2", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 10, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Insomniac saves the superhero genre with this stellar entry!", null, 59.99, 6, 65, "Spider-Man", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 11, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Yes, another one. Pick a war, any war!", null, 49.99, 6, 125, "Battlefield 5", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 12, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Everyone loves a gender neutral sweater!", null, 69.99, 7, 74, "Hoodie", "34570efb-179c-4518-a969-7562ee06dedd" },
-                    { 13, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Like a regular hat, but seen on hobos and hipsters alike!", null, 19.99, 7, 128, "Hipster Hat", "34570efb-179c-4518-a969-7562ee06dedd" }
+                    { 11, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Yes, another one. Pick a war, any war!", "https://i.imgur.com/c7u218K.gif", 49.99, 6, 125, "Battlefield 5", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 10, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Insomniac saves the superhero genre with this stellar entry!", "https://i.imgur.com/c7u218K.gif", 59.99, 6, 65, "Spider-Man", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 9, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "The wait is over! Check out this chilling peek of the future!", "https://i.imgur.com/c7u218K.gif", 59.99, 6, 45, "Red Dead Redemption 2", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 8, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Find out what happned to Ant-Man during the events of Infinity War", "https://i.imgur.com/c7u218K.gif", 34.99, 5, 22, "Ant-Man 2 4k Blu-ray Combo", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 7, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Like a turd, rolling in the wind...", "https://i.imgur.com/c7u218K.gif", 29.99, 5, 35, "Venom 4k Blu-ray Combo", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 6, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Join the Parr family on their continuing adventure!", "https://i.imgur.com/c7u218K.gif", 29.99, 5, 15, "The Incredibles 2", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 5, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "In a hole in the ground there lived a Hobbit...", "https://i.imgur.com/c7u218K.gif", 19.99, 4, 9, "The Hobbit", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 4, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "You know there's a lot more magic going on at that school...", "https://i.imgur.com/c7u218K.gif", 24.99, 4, 5, "50 Shades of Potter Hardcover", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 3, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "When you only have a hammer, everything starts to look like a nail..", "https://i.imgur.com/c7u218K.gif", 29.99, 3, 5, "Hammer", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 14, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Yet another expansion for a dying game...", "https://i.imgur.com/c7u218K.gif", 39.99, 2, 154, "Destiny 2: Forsaken", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 2, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "We need it, NSS needs it. Get it!", "https://i.imgur.com/c7u218K.gif", 189.99, 2, 5, "Microwave 4", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 1, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "It flies high", "https://i.imgur.com/c7u218K.gif", 7.99, 1, 100, "Kite", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 12, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Everyone loves a gender neutral sweater!", "https://i.imgur.com/c7u218K.gif", 69.99, 7, 74, "Hoodie", "269666fb-bee0-44a7-be70-2176a68c9919" },
+                    { 13, "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Like a regular hat, but seen on hobos and hipsters alike!", "https://i.imgur.com/c7u218K.gif", 19.99, 7, 128, "Hipster Hat", "269666fb-bee0-44a7-be70-2176a68c9919" }
                 });
 
             migrationBuilder.InsertData(

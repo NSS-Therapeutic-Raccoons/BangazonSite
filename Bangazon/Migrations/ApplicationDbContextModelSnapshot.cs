@@ -79,7 +79,7 @@ namespace Bangazon.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "34570efb-179c-4518-a969-7562ee06dedd", AccessFailedCount = 0, ConcurrencyStamp = "8e0e5efc-8f2c-4109-8d11-4e24211f380b", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEP75mG3tgjh+TkUEOTCckLvNb/I+xUOGq1763pv3kOE477KAy0eJGMeEtO5r9SKIfQ==", PhoneNumberConfirmed = false, SecurityStamp = "7aa37d15-2075-453c-9620-eccd5e70d23b", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
+                        new { Id = "269666fb-bee0-44a7-be70-2176a68c9919", AccessFailedCount = 0, ConcurrencyStamp = "70d04eca-d878-4648-8e83-8c19abc3ac33", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEM67QsfnPzgnuOBSOcg3ELbgmEapwQHo49KbJC/UnLesmTMoX4Z8sXswN/ah/Y9uXw==", PhoneNumberConfirmed = false, SecurityStamp = "fd623e89-859b-4e8d-a02a-d8a28d90a871", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" }
                     );
                 });
 
@@ -109,7 +109,7 @@ namespace Bangazon.Migrations
                     b.ToTable("Order");
 
                     b.HasData(
-                        new { OrderId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), UserId = "34570efb-179c-4518-a969-7562ee06dedd" }
+                        new { OrderId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), UserId = "269666fb-bee0-44a7-be70-2176a68c9919" }
                     );
                 });
 
@@ -165,8 +165,8 @@ namespace Bangazon.Migrations
                     b.ToTable("PaymentType");
 
                     b.HasData(
-                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "34570efb-179c-4518-a969-7562ee06dedd" }
+                        new { PaymentTypeId = 1, AccountNumber = "86753095551212", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "American Express", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { PaymentTypeId = 2, AccountNumber = "4102948572991", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Discover", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" }
                     );
                 });
 
@@ -176,7 +176,9 @@ namespace Bangazon.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City");
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(55);
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
@@ -186,7 +188,9 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<string>("ImagePath");
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(55);
 
                     b.Property<double>("Price");
 
@@ -210,19 +214,20 @@ namespace Bangazon.Migrations
                     b.ToTable("Product");
 
                     b.HasData(
-                        new { ProductId = 1, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "It flies high", Price = 7.99, ProductTypeId = 1, Quantity = 100, Title = "Kite", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 2, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "We need it, NSS needs it. Get it!", Price = 189.99, ProductTypeId = 2, Quantity = 5, Title = "Microwave 4", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 3, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "When you only have a hammer, everything starts to look like a nail..", Price = 29.99, ProductTypeId = 3, Quantity = 5, Title = "Hammer", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 4, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "You know there's a lot more magic going on at that school...", Price = 24.99, ProductTypeId = 4, Quantity = 5, Title = "50 Shades of Potter Hardcover", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 5, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "In a hole in the ground there lived a Hobbit...", Price = 19.99, ProductTypeId = 4, Quantity = 9, Title = "The Hobbit", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 6, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Join the Parr family on their continuing adventure!", Price = 29.99, ProductTypeId = 5, Quantity = 15, Title = "The Incredibles 2", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 7, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Like a turd, rolling in the wind...", Price = 29.99, ProductTypeId = 5, Quantity = 35, Title = "Venom 4k Blu-ray Combo", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 8, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Find out what happned to Ant-Man during the events of Infinity War", Price = 34.99, ProductTypeId = 5, Quantity = 22, Title = "Ant-Man 2 4k Blu-ray Combo", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 9, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "The wait is over! Check out this chilling peek of the future!", Price = 59.99, ProductTypeId = 6, Quantity = 45, Title = "Red Dead Redemption 2", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 10, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Insomniac saves the superhero genre with this stellar entry!", Price = 59.99, ProductTypeId = 6, Quantity = 65, Title = "Spider-Man", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 11, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Yes, another one. Pick a war, any war!", Price = 49.99, ProductTypeId = 6, Quantity = 125, Title = "Battlefield 5", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 12, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Everyone loves a gender neutral sweater!", Price = 69.99, ProductTypeId = 7, Quantity = 74, Title = "Hoodie", UserId = "34570efb-179c-4518-a969-7562ee06dedd" },
-                        new { ProductId = 13, DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Like a regular hat, but seen on hobos and hipsters alike!", Price = 19.99, ProductTypeId = 7, Quantity = 128, Title = "Hipster Hat", UserId = "34570efb-179c-4518-a969-7562ee06dedd" }
+                        new { ProductId = 1, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "It flies high", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 7.99, ProductTypeId = 1, Quantity = 100, Title = "Kite", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 2, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "We need it, NSS needs it. Get it!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 189.99, ProductTypeId = 2, Quantity = 5, Title = "Microwave 4", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 3, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "When you only have a hammer, everything starts to look like a nail..", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 29.99, ProductTypeId = 3, Quantity = 5, Title = "Hammer", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 4, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "You know there's a lot more magic going on at that school...", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 24.99, ProductTypeId = 4, Quantity = 5, Title = "50 Shades of Potter Hardcover", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 5, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "In a hole in the ground there lived a Hobbit...", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 19.99, ProductTypeId = 4, Quantity = 9, Title = "The Hobbit", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 6, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Join the Parr family on their continuing adventure!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 29.99, ProductTypeId = 5, Quantity = 15, Title = "The Incredibles 2", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 7, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Like a turd, rolling in the wind...", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 29.99, ProductTypeId = 5, Quantity = 35, Title = "Venom 4k Blu-ray Combo", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 8, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Find out what happned to Ant-Man during the events of Infinity War", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 34.99, ProductTypeId = 5, Quantity = 22, Title = "Ant-Man 2 4k Blu-ray Combo", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 9, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "The wait is over! Check out this chilling peek of the future!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 59.99, ProductTypeId = 6, Quantity = 45, Title = "Red Dead Redemption 2", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 10, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Insomniac saves the superhero genre with this stellar entry!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 59.99, ProductTypeId = 6, Quantity = 65, Title = "Spider-Man", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 11, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Yes, another one. Pick a war, any war!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 49.99, ProductTypeId = 6, Quantity = 125, Title = "Battlefield 5", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 12, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Everyone loves a gender neutral sweater!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 69.99, ProductTypeId = 7, Quantity = 74, Title = "Hoodie", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 13, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Like a regular hat, but seen on hobos and hipsters alike!", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 19.99, ProductTypeId = 7, Quantity = 128, Title = "Hipster Hat", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" },
+                        new { ProductId = 14, City = "Nashville", DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Description = "Yet another expansion for a dying game...", ImagePath = "https://i.imgur.com/c7u218K.gif", Price = 39.99, ProductTypeId = 2, Quantity = 154, Title = "Destiny 2: Forsaken", UserId = "269666fb-bee0-44a7-be70-2176a68c9919" }
                     );
                 });
 
