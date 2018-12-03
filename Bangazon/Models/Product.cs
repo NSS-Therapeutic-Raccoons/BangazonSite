@@ -28,8 +28,7 @@ namespace Bangazon.Models
     public double Price { get; set; }
 
     [Required]
-        [Display(Name = "Qty")]
-        public int Quantity { get; set; }
+    public int Quantity { get; set; }
 
     [Required]
     public string UserId {get; set;}
