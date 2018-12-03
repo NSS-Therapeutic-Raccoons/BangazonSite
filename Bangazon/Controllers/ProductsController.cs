@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -14,10 +16,16 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+		private readonly UserManager<ApplicationUser> _userManager;
+
+		public ProductsController(ApplicationDbContext context,
+						  UserManager<ApplicationUser> userManager)
+		{
+			_userManager = userManager;
+			_context = context;
+		}
+
+		private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Products
         public async Task<IActionResult> Index()
@@ -162,5 +170,40 @@ namespace Bangazon.Controllers
         {
             return _context.Product.Any(e => e.ProductId == id);
         }
-    }
+
+		[Authorize]
+		public async Task<IActionResult> Purchase([FromRoute] int id)
+		{
+			// Find the product requested
+			Product productToAdd = await _context.Product.SingleOrDefaultAsync(p => p.ProductId == id);
+
+			// Get the current user
+			var user = await GetCurrentUserAsync();
+
+			// See if the user has an open order
+			var openOrder = await _context.Order.SingleOrDefaultAsync(o => o.User == user && o.PaymentTypeId == null);
+
+
+			// If no order, create one, else add to existing order
+			Order activeOrder;
+			if (openOrder == null)
+			{
+				activeOrder = new Order();
+				activeOrder.UserId = user.Id;
+				activeOrder.PaymentTypeId = null;
+				_context.Add(activeOrder);
+				await _context.SaveChangesAsync();
+			}
+			else 
+			{
+				activeOrder = openOrder;
+			}
+			OrderProduct productToAddToOrder = new OrderProduct();
+			productToAddToOrder.ProductId = id;
+			productToAddToOrder.OrderId = activeOrder.OrderId;
+			_context.Add(productToAddToOrder);
+			await _context.SaveChangesAsync();
+			return RedirectToAction("Details","Orders", new { id = openOrder.OrderId });
+		}
+	}
 }

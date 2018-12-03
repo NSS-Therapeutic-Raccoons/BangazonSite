@@ -65,6 +65,7 @@
             @Html.DisplayFor(model => model.ProductType.Label)
         </dd>
     </dl>
+    <a asp-action="Purchase" asp-route-id="@Model.ProductId">Add to Cart</a>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> |
