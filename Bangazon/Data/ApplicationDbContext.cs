@@ -121,6 +121,8 @@ namespace Bangazon.Data {
                         UserId = user.Id,
                         Description = "It flies high",
                         Title = "Kite",
+                        City = "Nashville",
+                        ImagePath = "https://i.imgur.com/c7u218K.gif",
                         Quantity = 100,
                         Price = 7.99
                 },
@@ -130,6 +132,8 @@ namespace Bangazon.Data {
                         UserId = user.Id,
                         Description = "We need it, NSS needs it. Get it!",
                         Title = "Microwave 4",
+                        City = "Nashville",
+                        ImagePath = "https://i.imgur.com/c7u218K.gif",
                         Quantity = 5,
                         Price = 189.99
                 },
@@ -140,6 +144,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "When you only have a hammer, everything starts to look like a nail..",
                     Title = "Hammer",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 5,
                     Price = 29.99
                 },
@@ -150,6 +156,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "You know there's a lot more magic going on at that school...",
                     Title = "50 Shades of Potter Hardcover",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 5,
                     Price = 24.99
                 },
@@ -160,6 +168,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "In a hole in the ground there lived a Hobbit...",
                     Title = "The Hobbit",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 9,
                     Price = 19.99
                 },
@@ -170,6 +180,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Join the Parr family on their continuing adventure!",
                     Title = "The Incredibles 2",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 15,
                     Price = 29.99
                 },
@@ -180,6 +192,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Like a turd, rolling in the wind...",
                     Title = "Venom 4k Blu-ray Combo",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 35,
                     Price = 29.99
                 },
@@ -190,6 +204,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Find out what happned to Ant-Man during the events of Infinity War",
                     Title = "Ant-Man 2 4k Blu-ray Combo",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 22,
                     Price = 34.99
                 },
@@ -200,6 +216,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "The wait is over! Check out this chilling peek of the future!",
                     Title = "Red Dead Redemption 2",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 45,
                     Price = 59.99
                 },
@@ -210,6 +228,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Insomniac saves the superhero genre with this stellar entry!",
                     Title = "Spider-Man",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 65,
                     Price = 59.99
                 },
@@ -220,6 +240,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Yes, another one. Pick a war, any war!",
                     Title = "Battlefield 5",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 125,
                     Price = 49.99
                 },
@@ -230,6 +252,8 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Everyone loves a gender neutral sweater!",
                     Title = "Hoodie",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 74,
                     Price = 69.99
                 },
@@ -240,8 +264,22 @@ namespace Bangazon.Data {
                     UserId = user.Id,
                     Description = "Like a regular hat, but seen on hobos and hipsters alike!",
                     Title = "Hipster Hat",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
                     Quantity = 128,
                     Price = 19.99
+                },
+                new Product()
+                {
+                    ProductId = 14,
+                    ProductTypeId = 2,
+                    UserId = user.Id,
+                    Description = "Yet another expansion for a dying game...",
+                    Title = "Destiny 2: Forsaken",
+                    City = "Nashville",
+                    ImagePath = "https://i.imgur.com/c7u218K.gif",
+                    Quantity = 154,
+                    Price = 39.99
                 }
             );
 
