@@ -42,7 +42,7 @@ namespace Bangazon.Controllers
 			var orderProduct = await _context.OrderProduct
 				
 				.Include(p=>p.Product)
-				.FirstOrDefaultAsync(m=>m.OrderId == order.OrderId);
+				.ToListAsync();
             if (order == null)
             {
                 return NotFound();
