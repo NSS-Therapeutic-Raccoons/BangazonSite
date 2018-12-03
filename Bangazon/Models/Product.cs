@@ -33,9 +33,14 @@ namespace Bangazon.Models
     [Required]
     public string UserId {get; set;}
 
+    [Required]
+    [StringLength(55, ErrorMessage="Please set a city")]
     public string City {get; set;}
 
+    [Required]
+    [StringLength(55, ErrorMessage="Please link an image")]
     public string ImagePath {get; set;}
+
 
     [Required]
     public ApplicationUser User { get; set; }
