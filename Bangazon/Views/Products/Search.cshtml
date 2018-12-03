@@ -7,27 +7,35 @@
 <h2>Search Results for "@Model.Search"</h2>
 <hr />
 <p>Showing all Products related to "@Model.Search"</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Products) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-        </tr>
+<hr />
+@if (Model.Products.Count() == 0) 
+{ 
+    <p>No Products match "@Model.Search"</p>
 }
-    </tbody>
-</table>
+else 
+{ 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.Products) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}
