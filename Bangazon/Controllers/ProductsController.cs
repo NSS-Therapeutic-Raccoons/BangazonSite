@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
-using Microsoft.AspNetCore.Identity;
+using Bangazon.Models.ProductViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Bangazon.Controllers
 {
@@ -32,6 +34,26 @@ namespace Bangazon.Controllers
         {
             var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+
+        /*
+            Author: Ricky Bruner
+            Purpose: Method to accept the search input from the navbar, get products related to that query string, and return a view to the user based on that data.
+        */
+        // GET: Search Products
+        [Authorize]
+        public async Task<IActionResult> Search(string search)
+        {
+            ProductSearchViewModel viewmodel = new ProductSearchViewModel();
+
+            viewmodel.Search = search;
+
+            viewmodel.Products = await _context.Product
+                                    .Where(p => p.Title.Contains(search))
+                                    .ToListAsync();
+
+            return View(viewmodel);
         }
 
         // GET: Products/Details/5

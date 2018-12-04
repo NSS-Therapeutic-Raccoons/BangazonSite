@@ -47,9 +47,16 @@
                     {
                         <li><a asp-area="" asp-controller="Products" asp-action="Create">Sell Something</a></li>
                     }
-                    <li><a asp-area="" asp-controller="Products" asp-action="Index">Products(temp.)</a></li>
-                    <li><a asp-area="" asp-controller="Orders" asp-action="Index">View Cart</a></li>
-                </ul>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">View Cart</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li>
+                            <form asp-controller="Products" asp-action="Search" method="get" class="nav-search">
+                                <input type="text" name="search" class="input-sm" placeholder="Search for a product" />
+                            </form>
+                        </li>
+                    }
+                    </ul>
                 <partial name="_LoginPartial" />
             </div>
         </div>
