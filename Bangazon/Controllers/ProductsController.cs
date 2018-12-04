@@ -83,6 +83,10 @@ namespace Bangazon.Controllers
         Author:     Daniel Figueroa
         Purpose:    Route is Authorized so only a logged in user can view.
         */
+        /*
+        Author:     Taylor Gulley
+        Purpose:    Added Insert into Product Type Options for default of Choose a Category
+        */
         [Authorize]
         public async Task<IActionResult> Create()
         {
@@ -103,7 +107,7 @@ namespace Bangazon.Controllers
 
             productTypeListOptions.Insert(0, new SelectListItem
             {
-                Text = "Choose department...",
+                Text = "Choose a Category",
                 Value = "0"
             });
             createViewModel.ProductTypes = productTypeListOptions;
