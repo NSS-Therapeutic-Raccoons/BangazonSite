@@ -16,31 +16,13 @@
         {
             <div class="col-md-3 bg-primary" style="border: 4px white solid">
                 <div>
-                    <strong>@Html.DisplayNameFor(model => model.Title):</strong> @Html.DisplayFor(modelItem => item.Title)
+                    <strong>@Html.DisplayNameFor(model => model.Title):</strong> <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">@Html.DisplayFor(modelItem => item.Title)</a>
                 </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.Description):</strong> @Html.DisplayFor(modelItem => item.Description)
                 </div>
                 <div>
-                    <strong> @Html.DisplayNameFor(model => model.Price):</strong> @Html.DisplayFor(modelItem => item.Price)
-                </div>
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.Quantity):</strong> @Html.DisplayFor(modelItem => item.Quantity)
-                </div>
-                <div>
                     <strong> @Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(modelItem => item.DateCreated)
-                </div>
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.City):</strong> @Html.DisplayFor(modelItem => item.City)
-                </div>
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.User):</strong> @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
-                </div>
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.ProductType):</strong> @Html.DisplayFor(modelItem => item.ProductType.Label)
-                </div>
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.ImagePath):</strong> @Html.DisplayFor(modelItem => item.ImagePath)
                 </div>
             </div>
         }
