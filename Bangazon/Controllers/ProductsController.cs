@@ -122,6 +122,10 @@ namespace Bangazon.Controllers
         Purpose:    Route is Authorized so only a logged in user can view. Creates a new product and asks Jeeves (calls the DB) to add the product to the table. The user & UserId instance is removed from the model, and after
                     the ModelState is valid, it makes the GetCurrentUserAsync call to put the user back into the model and UserId is reassigned.
         */
+        /*
+        Author:     Taylor Gulley/Rickey Bruner
+        Purpose:    Added the creation of the product type list if the ModelState is not valid
+        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -137,7 +141,26 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Details), new { id = createProduct.Product.ProductId.ToString() });
             }
+            
+            var productTypes = await _context.ProductType.ToListAsync();
 
+            var productTypeListOptions = new List<SelectListItem>();
+
+            foreach (ProductType pt in productTypes)
+            {
+                productTypeListOptions.Add(new SelectListItem
+                {
+                    Value = pt.ProductTypeId.ToString(),
+                    Text = pt.Label
+                });
+            }
+            productTypeListOptions.Insert(0, new SelectListItem
+            {
+                Text = "Choose a Category",
+                Value = "0"
+            });
+            createProduct.ProductTypes = productTypeListOptions;
+            
             return View(createProduct);
         }
 
