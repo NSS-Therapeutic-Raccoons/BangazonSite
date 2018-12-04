@@ -111,8 +111,6 @@ namespace Bangazon.Controllers
                 Value = "0"
             });
             createViewModel.ProductTypes = productTypeListOptions;
-            //createViewModel.ProductTypes = new SelectListItem(_context.ProductType, "ProductTypeId", "Label");
-            //ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             return View(createViewModel);
         }
 
