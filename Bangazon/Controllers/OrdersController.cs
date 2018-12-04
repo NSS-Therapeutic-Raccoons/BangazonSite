@@ -41,11 +41,11 @@ namespace Bangazon.Controllers
         {
 			OrderDetailViewModel viewModel = new OrderDetailViewModel();
 			OrderLineItem lineItems = new OrderLineItem();
+			var user = await GetCurrentUserAsync();
+			var openOrder = await _context.Order.SingleOrDefaultAsync(o => o.User == user && o.PaymentTypeId == null);
 
             if (id == null)
             {
-				var user = await GetCurrentUserAsync();
-				var openOrder = await _context.Order.SingleOrDefaultAsync(o => o.User == user && o.PaymentTypeId == null);
 				if (openOrder!=null)
 				{
 					id = openOrder.OrderId;
@@ -55,8 +55,8 @@ namespace Bangazon.Controllers
 
             var order = await _context.Order
                 .Include(o => o.PaymentType)
-                .Include(o => o.User)
 				.Include(o => o.OrderProducts)
+                .Where(o => o.User.Id == user.Id)
                 .SingleOrDefaultAsync(o => o.OrderId == id);
 
 			var orderProduct = await _context.OrderProduct
@@ -67,12 +67,13 @@ namespace Bangazon.Controllers
 			List<OrderLineItem> lineItemsToadd = new List<OrderLineItem>();
 			viewModel.Order = order;
 			foreach (OrderProduct singleOrderProduct in orderProduct) 
-			{
-				OrderLineItem newLineItem = new OrderLineItem();
-				newLineItem.Product = singleOrderProduct.Product;
-				newLineItem.Cost = singleOrderProduct.Product.Price;
-				newLineItem.Units = 1;
-				lineItemsToadd.Add(newLineItem);
+			{	if (singleOrderProduct.OrderId==order.OrderId) {
+					OrderLineItem newLineItem = new OrderLineItem();
+					newLineItem.Product = singleOrderProduct.Product;
+					newLineItem.Cost = singleOrderProduct.Product.Price;
+					newLineItem.Units = 1;
+					lineItemsToadd.Add(newLineItem);
+				}
 			}
 			viewModel.LineItems = lineItemsToadd.AsEnumerable();
             return View(viewModel);

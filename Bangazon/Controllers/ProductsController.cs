@@ -264,7 +264,7 @@ namespace Bangazon.Controllers
 			_context.Update(productToAdd);
 			await _context.SaveChangesAsync();
 
-			return RedirectToAction("Details","Orders", new { id = openOrder.OrderId });
+			return RedirectToAction("Details","Orders", new { id = activeOrder.OrderId });
 		}
 	}
 }
