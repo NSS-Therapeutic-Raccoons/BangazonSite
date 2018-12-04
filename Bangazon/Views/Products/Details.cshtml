@@ -11,10 +11,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.DateCreated)
+            @Html.DisplayFor(model => model.Title)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -23,49 +23,26 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
+            Quantity Available
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProductType.Label)
+            Price/Unit
         </dd>
     </dl>
-    <a asp-action="Purchase" asp-route-id="@Model.ProductId">Add to Cart</a>
+    @if (Model.Quantity > 0)
+    {
+    <a asp-action="Purchase" asp-route-id="@Model.ProductId">Add to Order</a>
+    }
+    @if (Model.Quantity == 0)
+    {
+        <h3>Sorry, this item is currently unavailable</h3>
+    }
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> |
