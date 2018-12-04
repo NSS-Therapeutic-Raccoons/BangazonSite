@@ -83,6 +83,10 @@ namespace Bangazon.Controllers
         Author:     Daniel Figueroa
         Purpose:    Route is Authorized so only a logged in user can view.
         */
+        /*
+        Author:     Taylor Gulley
+        Purpose:    Added Insert into Product Type Options for default of Choose a Category
+        */
         [Authorize]
         public async Task<IActionResult> Create()
         {
@@ -101,9 +105,12 @@ namespace Bangazon.Controllers
 
             ProductCreateViewModel createViewModel = new ProductCreateViewModel();
 
+            productTypeListOptions.Insert(0, new SelectListItem
+            {
+                Text = "Choose a Category",
+                Value = "0"
+            });
             createViewModel.ProductTypes = productTypeListOptions;
-            //createViewModel.ProductTypes = new SelectListItem(_context.ProductType, "ProductTypeId", "Label");
-            //ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             return View(createViewModel);
         }
 
@@ -114,6 +121,10 @@ namespace Bangazon.Controllers
         Author:     Daniel Figueroa
         Purpose:    Route is Authorized so only a logged in user can view. Creates a new product and asks Jeeves (calls the DB) to add the product to the table. The user & UserId instance is removed from the model, and after
                     the ModelState is valid, it makes the GetCurrentUserAsync call to put the user back into the model and UserId is reassigned.
+        */
+        /*
+        Author:     Taylor Gulley/Rickey Bruner
+        Purpose:    Added the creation of the product type list if the ModelState is not valid
         */
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -130,7 +141,26 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Details), new { id = createProduct.Product.ProductId.ToString() });
             }
+            
+            var productTypes = await _context.ProductType.ToListAsync();
 
+            var productTypeListOptions = new List<SelectListItem>();
+
+            foreach (ProductType pt in productTypes)
+            {
+                productTypeListOptions.Add(new SelectListItem
+                {
+                    Value = pt.ProductTypeId.ToString(),
+                    Text = pt.Label
+                });
+            }
+            productTypeListOptions.Insert(0, new SelectListItem
+            {
+                Text = "Choose a Category",
+                Value = "0"
+            });
+            createProduct.ProductTypes = productTypeListOptions;
+            
             return View(createProduct);
         }
 
