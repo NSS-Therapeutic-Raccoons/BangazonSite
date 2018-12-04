@@ -9,6 +9,7 @@ using Bangazon.Data;
 using Bangazon.Models.OrderViewModels;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -35,6 +36,7 @@ namespace Bangazon.Controllers
         }
 
 		// GET: Orders/Details/5
+		[Authorize]
 		public async Task<IActionResult> Details(int? id)
         {
 			OrderDetailViewModel viewModel = new OrderDetailViewModel();
