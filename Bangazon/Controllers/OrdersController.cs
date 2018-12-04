@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models.OrderViewModels;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
@@ -15,10 +16,16 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+		private readonly UserManager<ApplicationUser> _userManager;
+
+		private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+		public OrdersController(ApplicationDbContext context,
+					UserManager<ApplicationUser> userManager)
         {
-            _context = context;
-        }
+			_userManager = userManager;
+			_context = context;
+		}
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -35,8 +42,10 @@ namespace Bangazon.Controllers
 
             if (id == null)
             {
-                return NotFound();
-            }
+				var user = await GetCurrentUserAsync();
+				var openOrder = await _context.Order.SingleOrDefaultAsync(o => o.User == user && o.PaymentTypeId == null);
+				id = openOrder.OrderId;
+			}
 
             var order = await _context.Order
                 .Include(o => o.PaymentType)
