@@ -37,7 +37,7 @@
     </dl>
     @if (Model.Quantity > 0)
     {
-    <a asp-action="Purchase" asp-route-id="@Model.ProductId">Add to Order</a>
+        <a asp-action="Purchase" asp-route-id="@Model.ProductId">Add to Order</a>
     }
     @if (Model.Quantity == 0)
     {

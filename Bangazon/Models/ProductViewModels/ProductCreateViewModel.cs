@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bangazon.Models.ProductViewModels
 {
-    public class ProductCreateViewModel
-    {
-        public Product Product { get; set; }
-        public List<SelectListItem> ProductTypes { get; set; }
-    }
+	public class ProductCreateViewModel
+	{
+		public Product Product { get; set; }
+		public List<SelectListItem> ProductTypes { get; set; }
+	}
 }
