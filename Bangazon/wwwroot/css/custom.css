@@ -29,3 +29,15 @@
     text-decoration: underline !important;
     color: blue !important;
 }
+
+.nav-search {
+    position: relative;
+}
+
+.nav-search input {
+    margin: 0;
+    margin-left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(30%);
+}
