@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@*
 
+        Author:     Daniel Figueroa
+        Purpose:    Index loops over the List that was send by controller and utilizes bootstrap columns to put content into their own containers.
+
+*@
 <div class="container">
     <h2>Welcome to Bangazon!</h2>
     <div class="row">
@@ -15,28 +20,28 @@
                 </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.Description):</strong> @Html.DisplayFor(modelItem => item.Description)
-</div>
+                </div>
                 <div>
                     <strong> @Html.DisplayNameFor(model => model.Price):</strong> @Html.DisplayFor(modelItem => item.Price)
-</div>
+                </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.Quantity):</strong> @Html.DisplayFor(modelItem => item.Quantity)
-</div>
+                </div>
                 <div>
                     <strong> @Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(modelItem => item.DateCreated)
-</div>
+                </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.City):</strong> @Html.DisplayFor(modelItem => item.City)
-</div>
+                </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.User):</strong> @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
-</div>
+                </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.ProductType):</strong> @Html.DisplayFor(modelItem => item.ProductType.Label)
-</div>
+                </div>
                 <div>
                     <strong>@Html.DisplayNameFor(model => model.ImagePath):</strong> @Html.DisplayFor(modelItem => item.ImagePath)
-</div>
+                </div>
             </div>
         }
     </div>

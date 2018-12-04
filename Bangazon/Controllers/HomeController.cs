@@ -22,6 +22,10 @@ namespace Bangazon.Controllers
             _context = context;
         }
 
+        /*
+        Author:     Daniel Figueroa
+        Purpose:    Index makes a call to the db grabbing all Products, order them by descneding orderDate and take the top 20 results and puts it into a list for the view.
+        */
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User).OrderByDescending(x => x.DateCreated).Take(20); ;
