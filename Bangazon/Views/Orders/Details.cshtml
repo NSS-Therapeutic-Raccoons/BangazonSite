@@ -10,43 +10,51 @@
     <h4>Order</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.DateCreated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.DateCreated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.DateCompleted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.DateCompleted)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.User.FirstName)
-        </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Order.OrderProducts)
-            </dt>
-        @foreach (var item in Model.Order.OrderProducts)
+        @if (Model.Order != null)
         {
-            <dd>
-                    @Html.DisplayFor(modelItem => item.Product.Title)
-            </dd>
-        }
-
             <dt>
-                @Html.DisplayNameFor(model => model.Order.PaymentType)
+                @Html.DisplayNameFor(model => model.Order.DateCreated)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Order.PaymentType.AccountNumber)
+                @Html.DisplayFor(model => model.Order.DateCreated)
             </dd>
-        </dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Order.User)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Order.User.FirstName)
+            </dd>
+            <dt>
+                Items in Order
+
+            </dt>
+            @foreach (var item in Model.LineItems)
+            {
+            <dd>
+                Product: @Html.DisplayFor(modelItem => item.Product.Title), Price per Unit: @Html.DisplayFor(modelItem => item.Cost), Quantity: @Html.DisplayFor(modelItem => item.Units)
+            </dd>
+            }
+            @if (Model.Order.PaymentType != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.Order.PaymentType)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Order.PaymentType.AccountNumber)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Order.DateCompleted)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Order.DateCompleted)
+                </dd>
+            }
+        }
+        @if (Model.Order == null) 
+         { 
+            <dd>You currently have no items in your cart</dd>
+         }
+    </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Order.OrderId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

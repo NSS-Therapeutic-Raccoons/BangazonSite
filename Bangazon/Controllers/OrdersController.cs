@@ -44,7 +44,11 @@ namespace Bangazon.Controllers
             {
 				var user = await GetCurrentUserAsync();
 				var openOrder = await _context.Order.SingleOrDefaultAsync(o => o.User == user && o.PaymentTypeId == null);
-				id = openOrder.OrderId;
+				if (openOrder!=null)
+				{
+					id = openOrder.OrderId;
+				}
+
 			}
 
             var order = await _context.Order
@@ -57,14 +61,7 @@ namespace Bangazon.Controllers
 				.Include(p=>p.Product)
 				.ToListAsync();
 
-            if (order == null)
-            {
-                return NotFound();
-            }
-			if (orderProduct == null)
-			{
-				return NotFound();
-			}
+           
 			List<OrderLineItem> lineItemsToadd = new List<OrderLineItem>();
 			viewModel.Order = order;
 			foreach (OrderProduct singleOrderProduct in orderProduct) 
