@@ -39,12 +39,11 @@
     {
         <a asp-action="Purchase" asp-route-id="@Model.ProductId">Add to Order</a>
     }
-    @if (Model.Quantity == 0)
+    @if (Model.Quantity <= 0)
     {
         <h3>Sorry, this item is currently unavailable</h3>
     }
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

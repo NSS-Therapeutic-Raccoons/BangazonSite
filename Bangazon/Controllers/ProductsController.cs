@@ -77,41 +77,6 @@ namespace Bangazon.Controllers
 		}
 
 		// GET: Products/Create
-		/*
-        Author:     Daniel Figueroa
-        Purpose:    Route is Authorized so only a logged in user can view.
-        */
-<<<<<<< HEAD
-		[Authorize]
-		public async Task<IActionResult> Create()
-		{
-			var productTypes = await _context.ProductType.ToListAsync();
-
-			var productTypeListOptions = new List<SelectListItem>();
-
-			foreach (ProductType pt in productTypes)
-			{
-				productTypeListOptions.Add(new SelectListItem
-				{
-					Value = pt.ProductTypeId.ToString(),
-					Text = pt.Label
-				});
-			}
-
-			ProductCreateViewModel createViewModel = new ProductCreateViewModel();
-
-			createViewModel.ProductTypes = productTypeListOptions;
-			//createViewModel.ProductTypes = new SelectListItem(_context.ProductType, "ProductTypeId", "Label");
-			//ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-			return View(createViewModel);
-		}
-
-		// POST: Products/Create
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-		/*
-=======
         /*
         Author:     Taylor Gulley
         Purpose:    Added Insert into Product Type Options for default of Choose a Category
@@ -143,125 +108,6 @@ namespace Bangazon.Controllers
             return View(createViewModel);
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /*
->>>>>>> master
-        Author:     Daniel Figueroa
-        Purpose:    Route is Authorized so only a logged in user can view. Creates a new product and asks Jeeves (calls the DB) to add the product to the table. The user & UserId instance is removed from the model, and after
-                    the ModelState is valid, it makes the GetCurrentUserAsync call to put the user back into the model and UserId is reassigned.
-        */
-<<<<<<< HEAD
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		[Authorize]
-		public async Task<IActionResult> Create(ProductCreateViewModel createProduct)
-		{
-			ModelState.Remove("Product.User");
-			ModelState.Remove("Product.UserId");
-			if (ModelState.IsValid)
-			{
-				createProduct.Product.User = await GetCurrentUserAsync();
-				createProduct.Product.UserId = createProduct.Product.User.Id;
-				_context.Add(createProduct.Product);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Details), new { id = createProduct.Product.ProductId.ToString() });
-			}
-
-			return View(createProduct);
-		}
-
-		// GET: Products/Edit/5
-		public async Task<IActionResult> Edit(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var product = await _context.Product.FindAsync(id);
-			if (product == null)
-			{
-				return NotFound();
-			}
-			ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-			ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
-			return View(product);
-		}
-
-		// POST: Products/Edit/5
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("ProductId,DateCreated,Description,Title,Price,Quantity,UserId,City,ImagePath,ProductTypeId")] Product product)
-		{
-			if (id != product.ProductId)
-			{
-				return NotFound();
-			}
-
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(product);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!ProductExists(product.ProductId))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-			ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
-			return View(product);
-		}
-
-		// GET: Products/Delete/5
-		public async Task<IActionResult> Delete(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var product = await _context.Product
-				.Include(p => p.ProductType)
-				.Include(p => p.User)
-				.FirstOrDefaultAsync(m => m.ProductId == id);
-			if (product == null)
-			{
-				return NotFound();
-			}
-
-			return View(product);
-		}
-
-		// POST: Products/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
-		{
-			var product = await _context.Product.FindAsync(id);
-			_context.Product.Remove(product);
-			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
-		}
-
-		private bool ProductExists(int id)
-		{
-			return _context.Product.Any(e => e.ProductId == id);
-		}
 
 		[Authorize]
 		public async Task<IActionResult> Purchase([FromRoute] int id)
@@ -305,8 +151,7 @@ namespace Bangazon.Controllers
 
 			return RedirectToAction("Details", "Orders", new { id = activeOrder.OrderId });
 		}
-	}
-=======
+	
         /*
         Author:     Taylor Gulley/Rickey Bruner
         Purpose:    Added the creation of the product type list if the ModelState is not valid
@@ -439,6 +284,6 @@ namespace Bangazon.Controllers
         {
             return _context.Product.Any(e => e.ProductId == id);
         }
-    }
->>>>>>> master
+	}
 }
+ 
