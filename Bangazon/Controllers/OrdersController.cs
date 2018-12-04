@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
+using Bangazon.Models.OrderViewModels;
 using Bangazon.Models;
 
 namespace Bangazon.Controllers
@@ -29,6 +30,9 @@ namespace Bangazon.Controllers
 		// GET: Orders/Details/5
 		public async Task<IActionResult> Details(int? id)
         {
+			OrderDetailViewModel viewModel = new OrderDetailViewModel();
+			OrderLineItem lineItems = new OrderLineItem();
+
             if (id == null)
             {
                 return NotFound();
@@ -39,10 +43,11 @@ namespace Bangazon.Controllers
                 .Include(o => o.User)
 				.Include(o => o.OrderProducts)
                 .SingleOrDefaultAsync(o => o.OrderId == id);
+
 			var orderProduct = await _context.OrderProduct
-				
 				.Include(p=>p.Product)
 				.ToListAsync();
+
             if (order == null)
             {
                 return NotFound();
@@ -51,8 +56,18 @@ namespace Bangazon.Controllers
 			{
 				return NotFound();
 			}
-
-            return View(order);
+			List<OrderLineItem> lineItemsToadd = new List<OrderLineItem>();
+			viewModel.Order = order;
+			foreach (OrderProduct singleOrderProduct in orderProduct) 
+			{
+				OrderLineItem newLineItem = new OrderLineItem();
+				newLineItem.Product = singleOrderProduct.Product;
+				newLineItem.Cost = singleOrderProduct.Product.Price;
+				newLineItem.Units = 1;
+				lineItemsToadd.Add(newLineItem);
+			}
+			viewModel.LineItems = lineItemsToadd.AsEnumerable();
+            return View(viewModel);
         }
 
         // GET: Orders/Create
