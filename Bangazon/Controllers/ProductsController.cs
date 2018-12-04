@@ -198,11 +198,16 @@ namespace Bangazon.Controllers
 			{
 				activeOrder = openOrder;
 			}
+
+			//Update the OrderProduct table so that the product is officially added to the order
 			OrderProduct productToAddToOrder = new OrderProduct();
 			productToAddToOrder.ProductId = id;
 			productToAddToOrder.OrderId = activeOrder.OrderId;
 			_context.Add(productToAddToOrder);
 			await _context.SaveChangesAsync();
+			//Subtract from the product's listed quantity when the order has been confirmed to avoid maximum suckiness
+			Product updatedProduct = new Product();
+			updatedProduct.ProductId = id;
 			return RedirectToAction("Details","Orders", new { id = openOrder.OrderId });
 		}
 	}
