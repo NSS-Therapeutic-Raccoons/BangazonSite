@@ -167,20 +167,37 @@ namespace Bangazon.Controllers
             ApplicationUser user = await GetCurrentUserAsync();
             
             Order order = await _context.Order
+                                        .Include(o => o.OrderProducts)
                                         .Where(o => o.UserId == user.Id && o.DateCompleted == null)
                                         .SingleOrDefaultAsync();
 
-            OrderProduct orderProduct = await _context.OrderProduct
-                                                      .Where(op => op.OrderId == order.OrderId && op.ProductId == product.ProductId)
-                                                      .Take(1)
-                                                      .SingleOrDefaultAsync();
+            OrderProduct orderProduct = order.OrderProducts
+                                             .Where(op => op.OrderId == order.OrderId && op.ProductId == product.ProductId)
+                                                      .Take(1).SingleOrDefault();
 
 
             _context.OrderProduct.Remove(orderProduct);
 
+            order.OrderProducts.Remove(orderProduct);
+
+            bool cancelOrder = false;
+
+            if (order.OrderProducts.Count == 0) 
+            {
+                _context.Order.Remove(order);
+                cancelOrder = true;
+            }
+
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", "Orders", new { id = order.OrderId });
+            if (cancelOrder == true)
+            {
+                return RedirectToAction("Details", "Orders");
+            }
+            else 
+            { 
+                return RedirectToAction("Details", "Orders", new { id = order.OrderId });
+            }
 
         }
 
