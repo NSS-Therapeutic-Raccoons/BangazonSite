@@ -97,8 +97,7 @@ namespace Bangazon.Controllers
             Order order = await _context.Order
                 .Include(o => o.OrderProducts)
                 .ThenInclude(op => op.Product)
-                .Where(o => o.OrderId == id)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(o => o.OrderId == id);
 
             foreach (OrderProduct op in order.OrderProducts) 
             {
