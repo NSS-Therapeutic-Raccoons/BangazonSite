@@ -57,10 +57,13 @@ namespace Bangazon.Views
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             return View();
         }
 
+        /*
+        Author:     Daniel Figueroa
+        Purpose:    PaymentType is generated, User & UserId removed for validation and inserted back in after. Then posted to DB.
+        */
         // POST: PaymentTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -79,7 +82,6 @@ namespace Bangazon.Views
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", paymentType.UserId);
             return View(paymentType);
         }
 
