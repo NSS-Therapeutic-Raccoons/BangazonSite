@@ -79,6 +79,7 @@ namespace Bangazon.Controllers
 				newLineItem.Product = singleOrderProduct.Product;
 				newLineItem.Cost = singleOrderProduct.Product.Price;
 				newLineItem.Units = 1;
+                newLineItem.OrderProductId = singleOrderProduct.OrderProductId;
 				lineItemsToadd.Add(newLineItem);
 			}
 			viewModel.LineItems = lineItemsToadd;

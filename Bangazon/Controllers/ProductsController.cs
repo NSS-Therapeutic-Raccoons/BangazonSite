@@ -163,57 +163,43 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> RemoveCartProduct(int id)
         {
             
-            // Get a product from the DB that matches the id being passed into the method.
-            Product product = await _context.Product
-                                            .Where(p => p.ProductId == id)
-                                            .SingleOrDefaultAsync();
+            // Get a OrderProduct from the DB that matches the id being passed into the method.
+            OrderProduct orderProduct = await _context.OrderProduct
+                                            .Include(op => op.Product)
+                                            .Include(op => op.Order)
+                                            .ThenInclude(o => o.OrderProducts)
+                                            .SingleOrDefaultAsync(op => op.OrderProductId == id);
             
-            // Get the User for getting the current Order
+            // Get the User for getting the current Order to verify that it is the users order only
             ApplicationUser user = await GetCurrentUserAsync();
-            
 
-            // Get the order that is currently open, i.e. it does not have a date completed assigned to it or a paymentId
-            Order order = await _context.Order
-                                        .Include(o => o.OrderProducts)
-                                        .Where(o => o.UserId == user.Id && o.PaymentTypeId == null && o.DateCompleted == null)
-                                        .SingleOrDefaultAsync();
+            if (orderProduct.Order.UserId != user.Id) 
+            { 
+                return RedirectToAction("Index", "Home");
+            }
             
-            // Get the OrderProduct from the open order that matches the product id from above. 
-            // Take one incase there are multiples of the same product in the order
-            OrderProduct orderProduct = order.OrderProducts
-                                             .Where(op => op.OrderId == order.OrderId && op.ProductId == product.ProductId)
-                                                      .Take(1).SingleOrDefault();
 
             // Update the quantity of the product to increase by one since it is going back out of the cart.
-            product.Quantity = product.Quantity + 1;
-            _context.Product.Update(product);
+            orderProduct.Product.Quantity = orderProduct.Product.Quantity + 1;
+            _context.Product.Update(orderProduct.Product);
 
             // Remove the Order Product from the DB & remove it from the order from above
             _context.OrderProduct.Remove(orderProduct);
-            order.OrderProducts.Remove(orderProduct);
+            orderProduct.Order.OrderProducts.Remove(orderProduct);
 
-            // created a bool to determine if the order is now product-less
-            bool cancelOrder = false;
 
-            // If order is product-less, remove the order from the DB and set bool to true
-            if (order.OrderProducts.Count == 0) 
+            // If order is product-less, remove the order from the DB
+            if (orderProduct.Order.OrderProducts.Count == 0) 
             {
-                _context.Order.Remove(order);
-                cancelOrder = true;
+                _context.Order.Remove(orderProduct.Order);
             }
 
             // Save all changes to DB
             await _context.SaveChangesAsync();
 
             // If order was deleted, take user to the empty cart view, else take them back to the same order, now updated.
-            if (cancelOrder == true)
-            {
-                return RedirectToAction("Details", "Orders");
-            }
-            else 
-            { 
-                return RedirectToAction("Details", "Orders", new { id = order.OrderId });
-            }
+            
+            return RedirectToAction("Details", "Orders");
 
         }
 
