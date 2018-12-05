@@ -67,7 +67,7 @@ namespace Bangazon.Views
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentTypeId,DateCreated,Description,AccountNumber,UserId")] PaymentType paymentType)
+        public async Task<IActionResult> Create(PaymentType paymentType)
         {
             ModelState.Remove("Product.User");
             ModelState.Remove("Product.UserId");
