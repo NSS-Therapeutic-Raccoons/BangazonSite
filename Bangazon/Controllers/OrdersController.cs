@@ -67,13 +67,8 @@ namespace Bangazon.Controllers
 			var order = await _context.Order
 				.Include(o => o.PaymentType)
 				.Include(o => o.OrderProducts)
+				.ThenInclude(op => op.Product)
 				.SingleOrDefaultAsync(o => o.OrderId == id);
-
-			var orderProduct = await _context.OrderProduct
-				.Include(p => p.Product)
-				.Where(p => p.OrderId == order.OrderId)
-				.ToListAsync();
-
 			/*
 			Author: Mark Hale
 			Purpose: This section creates a list of OrderLineItems to add to when we loop over all of the orderProducts gathered above. The conditional checks to make sure that the OrderId for the singleOrderProduct is equal to the OrderId that was obtained above. This prevents the user from seeing all of the items in every order in the database, including other user's order items.
@@ -81,7 +76,7 @@ namespace Bangazon.Controllers
 
 			List<OrderLineItem> lineItemsToadd = new List<OrderLineItem>();
 			viewModel.Order = order;
-			foreach (OrderProduct singleOrderProduct in orderProduct)
+			foreach (OrderProduct singleOrderProduct in order.OrderProducts)
 			{
 				OrderLineItem newLineItem = new OrderLineItem();
 				newLineItem.Product = singleOrderProduct.Product;
