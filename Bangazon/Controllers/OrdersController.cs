@@ -126,7 +126,7 @@ namespace Bangazon.Controllers
                 //choosePaymentTypeViewModel.Product.UserId = createProduct.Product.User.Id;
                 _context.Add(choosePaymentTypeViewModel.Order.PaymentType);
                 await _context.SaveChangesAsync();
-                return View(ThankYou);
+                return View();
             }
             return View(choosePaymentTypeViewModel);
         }
