@@ -32,7 +32,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd>
-            Price/Unit
+            @Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
     @if (Model.Quantity > 0)
