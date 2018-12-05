@@ -108,7 +108,10 @@ namespace Bangazon.Controllers
             return View(createViewModel);
         }
 
-
+		/*
+        Author: Mark Hale
+        Purpose: This method takes a product and adds it to the user's order.
+        */
 		[Authorize]
 		public async Task<IActionResult> Purchase([FromRoute] int id)
 		{

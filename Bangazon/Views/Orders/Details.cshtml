@@ -30,11 +30,12 @@
             </dt>
             @foreach (var item in Model.LineItems)
             {
-            <dd>
-                
+                <dd>
+
                     Product: <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Product.ProductId" class="category-title">
-    @Html.DisplayFor(modelItem => item.Product.Title)</a>, Price per Unit: @Html.DisplayFor(modelItem => item.Cost), Quantity: @Html.DisplayFor(modelItem => item.Units)
-            </dd>
+                        @Html.DisplayFor(modelItem => item.Product.Title)
+                    </a>, Price per Unit: @Html.DisplayFor(modelItem => item.Cost), Quantity: @Html.DisplayFor(modelItem => item.Units)
+                </dd>
             }
             @if (Model.Order.PaymentType != null)
             {
@@ -52,10 +53,10 @@
                 </dd>
             }
         }
-        @if (Model.Order == null) 
-         { 
+        @if (Model.Order == null)
+        {
             <dd>You currently have no items in your cart</dd>
-         }
+        }
     </dl>
 </div>
 <div>
