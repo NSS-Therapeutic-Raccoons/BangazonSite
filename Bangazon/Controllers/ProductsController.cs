@@ -203,7 +203,11 @@ namespace Bangazon.Controllers
 
         }
 
-
+        /*
+        Author:     Daniel Figueroa
+        Purpose:    Route is Authorized so only a logged in user can view. Creates a new product and asks Jeeves (calls the DB) to add the product to the table.
+                    The user instance is removed from the model, and after the ModelState is valid, it makes the GetCurrentUserAsync call to put the user back into the model.
+        */
         /*
         Author:     Taylor Gulley/Ricky Bruner
         Purpose:    Added the creation of the product type list if the ModelState is not valid
