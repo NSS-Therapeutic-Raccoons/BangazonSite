@@ -154,9 +154,39 @@ namespace Bangazon.Controllers
 
 			return RedirectToAction("Details", "Orders", new { id = activeOrder.OrderId });
 		}
-	
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RemoveCartProduct(int id)
+        {
+            
+            Product product = await _context.Product
+                                            .Where(p => p.ProductId == id)
+                                            .SingleOrDefaultAsync();
+
+            ApplicationUser user = await GetCurrentUserAsync();
+            
+            Order order = await _context.Order
+                                        .Where(o => o.UserId == user.Id && o.DateCompleted == null)
+                                        .SingleOrDefaultAsync();
+
+            OrderProduct orderProduct = await _context.OrderProduct
+                                                      .Where(op => op.OrderId == order.OrderId && op.ProductId == product.ProductId)
+                                                      .Take(1)
+                                                      .SingleOrDefaultAsync();
+
+
+            _context.OrderProduct.Remove(orderProduct);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Orders", new { id = order.OrderId });
+
+        }
+
+
         /*
-        Author:     Taylor Gulley/Rickey Bruner
+        Author:     Taylor Gulley/Ricky Bruner
         Purpose:    Added the creation of the product type list if the ModelState is not valid
         */
         [HttpPost]

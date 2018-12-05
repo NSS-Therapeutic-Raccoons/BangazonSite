@@ -26,17 +26,42 @@
             </dd>
             <dt>
                 Items in Order
-
             </dt>
-            @foreach (var item in Model.LineItems)
-            {
-                <dd>
-
-                    Product: <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Product.ProductId" class="category-title">
-                        @Html.DisplayFor(modelItem => item.Product.Title)
-                    </a>, Price per Unit: @Html.DisplayFor(modelItem => item.Cost), Quantity: @Html.DisplayFor(modelItem => item.Units)
-                </dd>
-            }
+            <dd>
+                <div class="row">
+                    <div class="col-md-2">Name</div>
+                    <div class="col-md-1">Price</div>
+                    <div class="col-md-1">Quantity</div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <hr class="col-md-5 hr-margin-sm" />
+                </div>
+                @foreach (var item in Model.LineItems)
+                {
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Product.ProductId" class="category-title">
+                                @item.Product.Title
+                            </a>
+                        </div>
+                        <div class="col-md-1">
+                            @item.Cost
+                        </div>
+                        <div class="col-md-1">
+                            @item.Units
+                        </div>
+                        <div class="col-md-1">
+                            <form asp-controller="Products" asp-action="RemoveCartProduct" asp-route-id="@item.Product.ProductId">
+                                <input type="submit" class="btn btn-danger btn-sm" value="Remove"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <hr class="col-md-5 hr-margin-sm" />
+                    </div>
+                }
+            </dd>
             @if (Model.Order.PaymentType != null)
             {
                 <dt>
