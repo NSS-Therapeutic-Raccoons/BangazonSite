@@ -133,7 +133,6 @@ namespace Bangazon.Controllers
 				activeOrder.UserId = user.Id;
 				activeOrder.PaymentTypeId = null;
 				_context.Add(activeOrder);
-				await _context.SaveChangesAsync();
 			}
 			else
 			{

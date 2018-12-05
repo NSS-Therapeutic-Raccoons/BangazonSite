@@ -29,10 +29,10 @@
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            Price/Unit
         </dt>
         <dd>
-            Price/Unit
+           @Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
     @if (Model.Quantity > 0)
