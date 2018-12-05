@@ -28,7 +28,8 @@ namespace Bangazon.Models
 		public double Price { get; set; }
 
 		[Required]
-		public int Quantity { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Item quantity must be more than 0")]
+        public int Quantity { get; set; }
 
 		[Required]
 		public string UserId { get; set; }
@@ -45,10 +46,10 @@ namespace Bangazon.Models
 		[Required]
 		public ApplicationUser User { get; set; }
 
-		[Required]
-		[Range(1, int.MaxValue, ErrorMessage = "Please choose a Product Category")]
-		[Display(Name="Product Category")]
-		public int ProductTypeId { get; set; }
+        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please choose a Product Category")]
+        [Display(Name="Product Category")]
+        public int ProductTypeId { get; set; }
 
 		public ProductType ProductType { get; set; }
 
