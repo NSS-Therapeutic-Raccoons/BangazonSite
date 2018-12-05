@@ -12,7 +12,7 @@
         @foreach (Product p in Model.Products)
         {
             <div class="col-md-7">
-                @p.Title
+                <a  asp-controller="Products" asp-action="Details" asp-route-id="@p.ProductId" class="category-title">@p.Title</a>
             </div>
             <div class="col-md-3">
                 @p.Quantity

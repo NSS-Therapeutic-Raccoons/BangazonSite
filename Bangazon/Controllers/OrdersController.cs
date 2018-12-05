@@ -46,8 +46,10 @@ namespace Bangazon.Controllers
 			Purpose: Looks to see if an OrderId was supplied in the URL, if not then it looks to see if the current user has an open order. If there is an open order, then it uses the open order's order id as the id value. If there isn't an open order, then it returns the OrderDetailviewModel with nothing in it so that the order in the viewmodel will be null. This causes the default message "there are no items in the cart" to appear on the screen instead of the actual order.
 			*/
 
-			if (id == null)
-			{
+			/*
+			Author: Mark Hale
+			Purpose: Collects the open order using the provided OrderId from above and selects that we want from it using the include method. The orderProduct variable is used to actually pull in the data that the order variable uses to fill out it's product data in OrderProducts.
+			*/
 				var openOrder = await _context.Order.SingleOrDefaultAsync(o => o.User == user && o.PaymentTypeId == null);
 				if (openOrder == null)
 				{
@@ -59,16 +61,11 @@ namespace Bangazon.Controllers
 					id = openOrder.OrderId;
 				}
 
-			}
-			/*
-			Author: Mark Hale
-			Purpose: Collects the open order using the provided OrderId from above and selects that we want from it using the include method. The orderProduct variable is used to actually pull in the data that the order variable uses to fill out it's product data in OrderProducts.
-			*/
 			var order = await _context.Order
 				.Include(o => o.PaymentType)
 				.Include(o => o.OrderProducts)
 				.ThenInclude(op => op.Product)
-				.SingleOrDefaultAsync(o => o.OrderId == id);
+				.SingleOrDefaultAsync(o => o.OrderId == id && user.Id == o.User.Id);
 			/*
 			Author: Mark Hale
 			Purpose: This section creates a list of OrderLineItems to add to when we loop over all of the orderProducts gathered above. The conditional checks to make sure that the OrderId for the singleOrderProduct is equal to the OrderId that was obtained above. This prevents the user from seeing all of the items in every order in the database, including other user's order items.
