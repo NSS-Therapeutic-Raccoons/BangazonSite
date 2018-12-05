@@ -9,22 +9,22 @@
         Purpose:    Index loops over the List that was send by controller and utilizes bootstrap columns to put content into their own containers and hyperlinks to the details of each.
 
 *@
-<div class="container">
+<div class="container-fluid">
     <h2>Welcome to Bangazon!</h2>
-    <div class="row">
+    <div class="row" style="overflow: hidden">
         @foreach (var item in Model)
         {
-            <div class="col-md-3 bg-primary" style="border: 4px white solid">
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.Title):</strong> <a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">@Html.DisplayFor(modelItem => item.Title)</a>
-                </div>
-                <div>
-                    <strong>@Html.DisplayNameFor(model => model.Description):</strong> @Html.DisplayFor(modelItem => item.Description)
-                </div>
-                <div>
-                    <strong> @Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(modelItem => item.DateCreated)
-                </div>
+        <div class="col-md-3" style="border: 4px white solid; background: #222; color: #9d9d9d; word-wrap: break-word; text-align: center; margin-bottom: -99999px; padding-bottom: 99999px;">
+            <div>
+                <a class="h3" style="color: lightblue" asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">@Html.DisplayFor(modelItem => item.Title)</a>
             </div>
+            <div style="font-style: italic; height: 62px; overflow: hidden;">
+                @Html.DisplayFor(modelItem => item.Description)
+            </div>
+            <div>
+                <strong> @Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(modelItem => item.DateCreated)
+            </div>
+        </div>
         }
     </div>
 </div>
