@@ -152,9 +152,60 @@ namespace Bangazon.Controllers
 
 			return RedirectToAction("Details", "Orders", new { id = activeOrder.OrderId });
 		}
-	
+
+
         /*
-        Author:     Taylor Gulley/Rickey Bruner
+            * Author: Ricky Bruner
+            * Purpose: This Method handles the removal or OrderProducts from an Order, and closes (Deletes) and order if you are removing the last product on the order.
+        */
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RemoveCartProduct(int id)
+        {
+            
+            // Get a OrderProduct from the DB that matches the id being passed into the method.
+            OrderProduct orderProduct = await _context.OrderProduct
+                                            .Include(op => op.Product)
+                                            .Include(op => op.Order)
+                                            .ThenInclude(o => o.OrderProducts)
+                                            .SingleOrDefaultAsync(op => op.OrderProductId == id);
+            
+            // Get the User for getting the current Order to verify that it is the users order only
+            ApplicationUser user = await GetCurrentUserAsync();
+
+            if (orderProduct.Order.UserId != user.Id) 
+            { 
+                return RedirectToAction("Index", "Home");
+            }
+            
+
+            // Update the quantity of the product to increase by one since it is going back out of the cart.
+            orderProduct.Product.Quantity = orderProduct.Product.Quantity + 1;
+            _context.Product.Update(orderProduct.Product);
+
+            // Remove the Order Product from the DB & remove it from the order from above
+            _context.OrderProduct.Remove(orderProduct);
+            orderProduct.Order.OrderProducts.Remove(orderProduct);
+
+
+            // If order is product-less, remove the order from the DB
+            if (orderProduct.Order.OrderProducts.Count == 0) 
+            {
+                _context.Order.Remove(orderProduct.Order);
+            }
+
+            // Save all changes to DB
+            await _context.SaveChangesAsync();
+
+            // If order was deleted, take user to the empty cart view, else take them back to the same order, now updated.
+            
+            return RedirectToAction("Details", "Orders");
+
+        }
+
+
+        /*
+        Author:     Taylor Gulley/Ricky Bruner
         Purpose:    Added the creation of the product type list if the ModelState is not valid
         */
         [HttpPost]
