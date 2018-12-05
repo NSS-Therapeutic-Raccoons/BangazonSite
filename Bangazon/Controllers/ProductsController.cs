@@ -144,7 +144,6 @@ namespace Bangazon.Controllers
 			productToAddToOrder.ProductId = id;
 			productToAddToOrder.OrderId = activeOrder.OrderId;
 			_context.Add(productToAddToOrder);
-			await _context.SaveChangesAsync();
 
 			/*Subtract from the product's listed quantity when the order has been confirmed to avoid maximum suckiness Take the product that we found above, subtract 1 from the quantity field, update the context, save the changes to complete the update.*/
 			productToAdd.Quantity = productToAdd.Quantity - 1;
