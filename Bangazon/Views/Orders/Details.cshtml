@@ -62,6 +62,12 @@
                     </div>
                 }
             </dd>
+            <dt></dt>
+            <dd>
+                <form asp-controller="Orders" asp-action="CancelOrder" asp-route-id="@Model.Order.OrderId">
+                    <input type="submit" class="btn btn-warning" value="Cancel Order" />
+                </form>
+            </dd>
             @if (Model.Order.PaymentType != null)
             {
                 <dt>

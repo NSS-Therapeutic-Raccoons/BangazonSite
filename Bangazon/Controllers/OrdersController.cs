@@ -84,5 +84,34 @@ namespace Bangazon.Controllers
 			viewModel.LineItems = lineItemsToadd;
 			return View(viewModel);
 		}
-	}
+
+        /*
+            * Author: Ricky Bruner
+            * Purpose: Deletes an order if a user decides to cancel it.
+        */
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            Order order = await _context.Order
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .Where(o => o.OrderId == id)
+                .SingleOrDefaultAsync();
+
+            foreach (OrderProduct op in order.OrderProducts) 
+            {
+                op.Product.Quantity = op.Product.Quantity + 1;
+                _context.Product.Update(op.Product);
+                _context.OrderProduct.Remove(op);
+            }
+
+            _context.Order.Remove(order);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details");
+        }
+
+    }
 }
