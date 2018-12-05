@@ -167,6 +167,7 @@ namespace Bangazon.Controllers
             OrderProduct orderProduct = await _context.OrderProduct
                                             .Include(op => op.Product)
                                             .Include(op => op.Order)
+                                            .ThenInclude(o => o.OrderProducts)
                                             .SingleOrDefaultAsync(op => op.OrderProductId == id);
             
             // Get the User for getting the current Order to verify that it is the users order only
@@ -174,7 +175,7 @@ namespace Bangazon.Controllers
 
             if (orderProduct.Order.UserId != user.Id) 
             { 
-                return RedirectToAction("Index", "Home", new { id = orderProduct.Order.OrderId });
+                return RedirectToAction("Index", "Home");
             }
             
 
@@ -186,28 +187,19 @@ namespace Bangazon.Controllers
             _context.OrderProduct.Remove(orderProduct);
             orderProduct.Order.OrderProducts.Remove(orderProduct);
 
-            // created a bool to determine if the order is now product-less
-            bool cancelOrder = false;
 
-            // If order is product-less, remove the order from the DB and set bool to true
+            // If order is product-less, remove the order from the DB
             if (orderProduct.Order.OrderProducts.Count == 0) 
             {
                 _context.Order.Remove(orderProduct.Order);
-                cancelOrder = true;
             }
 
             // Save all changes to DB
             await _context.SaveChangesAsync();
 
             // If order was deleted, take user to the empty cart view, else take them back to the same order, now updated.
-            if (cancelOrder == true)
-            {
-                return RedirectToAction("Details", "Orders");
-            }
-            else 
-            { 
-                return RedirectToAction("Details", "Orders", new { id = orderProduct.Order.OrderId });
-            }
+            
+            return RedirectToAction("Details", "Orders");
 
         }
 
