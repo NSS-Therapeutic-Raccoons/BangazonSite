@@ -84,5 +84,51 @@ namespace Bangazon.Controllers
 			viewModel.LineItems = lineItemsToadd;
 			return View(viewModel);
 		}
-	}
+
+        // Get
+        public async Task<IActionResult> ChoosePaymentType()
+        {
+            var user = await GetCurrentUserAsync();
+
+            var paymentTypes = await _context.PaymentType.Where(pt => pt.User == user).ToListAsync(); //pt => pt.UserId == id for only getting the users payment types
+
+            var paymentTypeListOptions = new List<SelectListItem>();
+
+            foreach (PaymentType pt in paymentTypes)
+            {
+                paymentTypeListOptions.Add(new SelectListItem
+                {
+                    Value = pt.PaymentTypeId.ToString(),
+                    Text = pt.Description
+                });
+            }
+
+            OrderPaymentTypesViewModel choosePaymentTypeViewModel = new OrderPaymentTypesViewModel();
+
+            paymentTypeListOptions.Insert(0, new SelectListItem
+            {
+                Text = "Choose a Payment Type",
+                Value = "0"
+            });
+            choosePaymentTypeViewModel.PaymentTypes = paymentTypeListOptions;
+            return View(choosePaymentTypeViewModel);
+        }
+
+        // Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChoosePaymentType(OrderPaymentTypesViewModel choosePaymentTypeViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //choosePaymentTypeViewModel.Product.User = await GetCurrentUserAsync();
+                //choosePaymentTypeViewModel.Product.UserId = createProduct.Product.User.Id;
+                _context.Add(choosePaymentTypeViewModel.Order.PaymentType);
+                await _context.SaveChangesAsync();
+                return View(ThankYou);
+            }
+            return View(choosePaymentTypeViewModel);
+        }
+
+    }
 }
