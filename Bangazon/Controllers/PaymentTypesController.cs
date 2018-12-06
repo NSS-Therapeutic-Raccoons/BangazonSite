@@ -40,20 +40,23 @@ namespace Bangazon.Views
 		[Authorize]
 		public IActionResult Create()
 		{
-			ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
 			return View();
 		}
 
+		/*
+        Author:     Daniel Figueroa
+        Purpose:    PaymentType is generated, User & UserId removed for validation and inserted back in after. Then posted to DB.
+        */
 		// POST: PaymentTypes/Create
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[Authorize]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("PaymentTypeId,DateCreated,Description,AccountNumber,UserId")] PaymentType paymentType)
+		public async Task<IActionResult> Create(PaymentType paymentType)
 		{
-			ModelState.Remove("Product.User");
-			ModelState.Remove("Product.UserId");
+			ModelState.Remove("User");
+			ModelState.Remove("UserId");
 			if (ModelState.IsValid)
 			{
 				paymentType.User = await GetCurrentUserAsync();
@@ -62,11 +65,28 @@ namespace Bangazon.Views
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+			return View(paymentType);
+		}
+
+		// GET: PaymentTypes/Edit/5
+		[Authorize]
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var paymentType = await _context.PaymentType.FindAsync(id);
+			if (paymentType == null)
+			{
+				return NotFound();
+			}
 			ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", paymentType.UserId);
 			return View(paymentType);
 		}
 
-		
+
 
 		// GET: PaymentTypes/Delete/5
 		[HttpPost]
