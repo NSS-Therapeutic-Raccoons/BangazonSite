@@ -85,10 +85,18 @@
     </dl>
     @if (Model.Order != null)
     {
-        <div class="btn btn-default">
-            <a asp-action="ChoosePaymentType" asp-route-id="@Model.Order.OrderId">Complete Order</a>
+        <div class="justify-center">
+            <div class="col-md-2">
+                <form asp-controller="Orders" asp-action="ChoosePaymentType" asp-route-id="@Model.Order.OrderId" method="get">
+                    <button type="submit" class="btn btn-primary btn-default">Complete Order</button>
+                </form>
+            </div>
+            <div class="col-md-2">
+                <form asp-controller="Orders" asp-action="CancelOrder" asp-route-id="@Model.Order.OrderId">
+                    <input type="submit" class="btn btn-warning" value="Cancel Order" />
+                </form>
+            </div>
         </div>
     }
 </div>
-<div>
-</div>
+

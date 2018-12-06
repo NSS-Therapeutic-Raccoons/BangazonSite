@@ -87,8 +87,36 @@ namespace Bangazon.Controllers
 		}
 
         /*
-        Author: Taylor Gulley
-        Purpose: To retrieve the payments types associated with the current user to attach to an order.
+            * Author: Ricky Bruner
+            * Purpose: Deletes an order if a user decides to cancel it.
+        */
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            Order order = await _context.Order
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .SingleOrDefaultAsync(o => o.OrderId == id);
+
+            foreach (OrderProduct op in order.OrderProducts) 
+            {
+                op.Product.Quantity = op.Product.Quantity + 1;
+                _context.Product.Update(op.Product);
+                _context.OrderProduct.Remove(op);
+            }
+
+            _context.Order.Remove(order);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details");
+
+        }
+
+        /*
+            Author: Taylor Gulley
+            Purpose: To retrieve the payments types associated with the current user to attach to an order.
         */
         // Get
         [Authorize]
@@ -124,8 +152,8 @@ namespace Bangazon.Controllers
         }
 
         /*
-        Author: Taylor Gulley
-        Purpose: To attach the chosen Payment TypeId to the order. Also if the user doesn't choose a payment type they will be prompted to choose one.
+            Author: Taylor Gulley
+            Purpose: To attach the chosen Payment TypeId to the order. Also if the user doesn't choose a payment type they will be prompted to choose one.
         */
         // Post
         [HttpPost]
