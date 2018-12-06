@@ -83,9 +83,12 @@
             <dd>You currently have no items in your cart</dd>
         }
     </dl>
-    <div class="btn btn-default">
-        <a asp-action="ChoosePaymentType">Complete Order</a>
-    </div>
+    @if (Model.Order != null)
+    {
+        <div class="btn btn-default">
+            <a asp-action="ChoosePaymentType" asp-route-id="@Model.Order.OrderId">Complete Order</a>
+        </div>
+    }
 </div>
 <div>
 </div>

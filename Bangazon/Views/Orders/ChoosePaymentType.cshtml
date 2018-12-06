@@ -6,15 +6,17 @@
 
 <h2>Choose a Payment Type</h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label asp-for="Order.PaymentType.PaymentTypeId" class="control-label"></label>
-            <select asp-for="Order.PaymentType.PaymentTypeId" class="form-control" asp-items="@Model.PaymentTypes"></select>
+<form asp-controller="Orders" asp-action="ChoosePaymentType" asp-route-id="@Model.Order.OrderId">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="PaymentTypeId" class="control-label">Payment Types</label>
+                <select asp-for="PaymentTypeId" class="form-control" asp-items="@Model.PaymentTypes"></select>
+                <span asp-validation-for="PaymentTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Done" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
-<div class="form-group">
-    <input type="submit" value="Done" class="btn btn-default" />
-</div>
-@*<input asp-action="ThankYou" type="submit" value="Done" class="btn btn-default" />*@
+</form>
