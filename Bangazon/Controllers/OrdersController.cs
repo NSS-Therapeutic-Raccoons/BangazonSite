@@ -111,6 +111,92 @@ namespace Bangazon.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details");
+
+        }
+
+        /*
+            Author: Taylor Gulley
+            Purpose: To retrieve the payments types associated with the current user to attach to an order.
+        */
+        // Get
+        [Authorize]
+        public async Task<IActionResult> ChoosePaymentType(int id)
+        {
+            var user = await GetCurrentUserAsync();
+
+            var paymentTypes = await _context.PaymentType.Where(pt => pt.User == user).ToListAsync();
+            var order = await _context.Order.SingleOrDefaultAsync(o => o.OrderId == id);
+
+            var paymentTypeListOptions = new List<SelectListItem>();
+
+            foreach (PaymentType pt in paymentTypes)
+            {
+                paymentTypeListOptions.Add(new SelectListItem
+                {
+                    Value = pt.PaymentTypeId.ToString(),
+                    Text = pt.Description
+                });
+            }
+
+            OrderPaymentTypesViewModel choosePaymentTypeViewModel = new OrderPaymentTypesViewModel();
+
+            paymentTypeListOptions.Insert(0, new SelectListItem
+            {
+                Text = "Choose a Payment Type",
+                Value = "0"
+            });
+
+            choosePaymentTypeViewModel.Order = order;
+            choosePaymentTypeViewModel.PaymentTypes = paymentTypeListOptions;
+            return View(choosePaymentTypeViewModel);
+        }
+
+        /*
+            Author: Taylor Gulley
+            Purpose: To attach the chosen Payment TypeId to the order. Also if the user doesn't choose a payment type they will be prompted to choose one.
+        */
+        // Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> ChoosePaymentType(OrderPaymentTypesViewModel choosePaymentTypeViewModel, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                Order order = await _context.Order.SingleOrDefaultAsync(o => o.OrderId == id);
+                order.DateCompleted = DateTime.Today;
+                order.PaymentTypeId = choosePaymentTypeViewModel.PaymentTypeId;
+                _context.Order.Update(order);
+                await _context.SaveChangesAsync();
+                return View("ThankYou");
+            }
+            var user = await GetCurrentUserAsync();
+
+            var paymentTypes = await _context.PaymentType.Where(pt => pt.User == user).ToListAsync();
+            var viewOrder = await _context.Order.SingleOrDefaultAsync(o => o.OrderId == id);
+
+            var paymentTypeListOptions = new List<SelectListItem>();
+
+            foreach (PaymentType pt in paymentTypes)
+            {
+                paymentTypeListOptions.Add(new SelectListItem
+                {
+                    Value = pt.PaymentTypeId.ToString(),
+                    Text = pt.Description
+                });
+            }
+
+            OrderPaymentTypesViewModel viewModel = new OrderPaymentTypesViewModel();
+
+            paymentTypeListOptions.Insert(0, new SelectListItem
+            {
+                Text = "Choose a Payment Type",
+                Value = "0"
+            });
+
+            viewModel.Order = viewOrder;
+            viewModel.PaymentTypes = paymentTypeListOptions;
+            return View(viewModel);
         }
 
     }
