@@ -46,3 +46,8 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
